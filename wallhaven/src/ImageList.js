@@ -1,12 +1,13 @@
 import React from 'react';
+import './ImageList.css';
 
 const ImageList = ({ images, onImageClick }) => {
   return (
-    <div>
+    <div className="image-list">
       {images.map((image) => (
         <img
           key={image.id}
-          src={image.thumbnailUrl}
+          src={image.thumbs.large}
           alt={image.id}
           onClick={() => onImageClick(image)}
         />
