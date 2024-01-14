@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Pagination, InputGroup, FormControl } from 'react-bootstrap';
+import { Container, Row, Col, Pagination, InputGroup, FormControl, Modal } from 'react-bootstrap';
 
 const SearchWallpaper = () => {
   const [query, setQuery] = useState('');
   const [wallpapers, setWallpapers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [wallpapersPerPage] = useState(12);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
   const apiKey = 'nS3UpX7vONFrH1yFbdg71bxEmiucd3dI';
 
   useEffect(() => {
@@ -30,6 +32,11 @@ const SearchWallpaper = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const handleImageClick = (wallpaper) => {
+    setSelectedImage(wallpaper);
+    setShowModal(true);
+  };
+
   const indexOfLastWallpaper = currentPage * wallpapersPerPage;
   const indexOfFirstWallpaper = indexOfLastWallpaper - wallpapersPerPage;
   const currentWallpapers = wallpapers.slice(indexOfFirstWallpaper, indexOfLastWallpaper);
@@ -46,15 +53,13 @@ const SearchWallpaper = () => {
           aria-label="Search wallpapers"
           aria-describedby="basic-addon2"
         />
-        {/* You can add a clear button if needed */}
-        {/* <Button variant="outline-secondary">Clear</Button> */}
       </InputGroup>
 
       {/* Wallpapers Display */}
       <Row xs={1} md={2} lg={3} xl={4}>
         {currentWallpapers.length > 0 ? (
           currentWallpapers.map((wallpaper) => (
-            <Col key={wallpaper.id} className="mb-4">
+            <Col key={wallpaper.id} className="mb-4" onClick={() => handleImageClick(wallpaper)}>
               <img src={wallpaper.thumbs.large} alt={wallpaper.id} className="img-fluid rounded" />
               <p className="mt-2">Views: {wallpaper.views}</p>
               <p>Favorites: {wallpaper.favorites}</p>
@@ -77,6 +82,27 @@ const SearchWallpaper = () => {
           </Pagination.Item>
         ))}
       </Pagination>
+
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+    <Modal.Header closeButton>
+      <Modal.Title>Original Image</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      {selectedImage && (
+        <div>
+          <img src={selectedImage.path} alt={selectedImage.id} className="img-fluid" />
+          <p>Uploader: {selectedImage.uploader}</p>
+          <p>Date: {selectedImage.created_at}</p>
+          <p>Category: {selectedImage.category}</p>
+          <p>Size: {selectedImage.file_size} bytes</p>
+          <p>Views: {selectedImage.views}</p>
+          <p>Favorites: {selectedImage.favorites}</p>
+          <p>Link: <a href={selectedImage.url} target="_blank" rel="noopener noreferrer">{selectedImage.url}</a></p>
+          <p>Thumbnail: <img src={selectedImage.thumbs.original} alt={`Thumbnail for ${selectedImage.id}`} /></p>
+        </div>
+      )}
+    </Modal.Body>
+  </Modal>
     </Container>
   );
 };
