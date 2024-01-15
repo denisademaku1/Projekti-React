@@ -12,7 +12,7 @@ import {
   Button,
 } from "react-bootstrap";
 import ImageModal from "./components/ImageModal";
-import logo from "./img/logo.png";
+import User from "./img/user.jpeg";
 
 const SearchWallpaper = () => {
   const [query, setQuery] = useState("");
@@ -22,6 +22,8 @@ const SearchWallpaper = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [sortBy, setSortBy] = useState("latest");
+  const [navbarColor, setNavbarColor] = useState("");
+
   const apiKey = "nS3UpX7vONFrH1yFbdg71bxEmiucd3dI";
 
   useEffect(() => {
@@ -35,7 +37,7 @@ const SearchWallpaper = () => {
             },
           }
         );
-
+        console.log(response);
         const sortedWallpapers = response.data.data.sort((a, b) => {
           if (sortBy === "latest") {
             return new Date(b.created_at) - new Date(a.created_at);
@@ -54,6 +56,20 @@ const SearchWallpaper = () => {
 
     searchWallpapers();
   }, [query, sortBy, apiKey]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const newColor = scrollPosition > 100 ? "#F8F4EC" : "white";
+      setNavbarColor(newColor);
+    };
+
+    window.onscroll = handleScroll;
+
+    return () => {
+      window.onscroll = null;
+    };
+  }, []);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -75,8 +91,17 @@ const SearchWallpaper = () => {
   );
 
   return (
-    <Container className="text-center d-flex flex-column align-items-center mt-5">
-      <nav className="w-100 navbar navbar-expand-lg flex-row align-items-center justify-content-between">
+    <div className="text-center d-flex flex-column align-items-center">
+      <nav
+        style={{
+          position: "sticky",
+          top: 0,
+          backgroundColor: navbarColor,
+          zIndex: 100,
+          padding: "1% 3%",
+        }}
+        className="w-100 navbar navbar-expand-lg flex-row align-items-center justify-content-between"
+      >
         <a className="navbar-brand d-flex align-items-start" href="#">
           <h1
             className="mb-2"
@@ -85,7 +110,7 @@ const SearchWallpaper = () => {
             WallHaven
           </h1>
         </a>
-        <div className="w-70 mb-3 d-flex justify-content-end gap-2">
+        <div className="w-70 d-flex justify-content-end gap-2">
           <Button
             style={{
               border: "1px solid #43766C",
@@ -121,57 +146,99 @@ const SearchWallpaper = () => {
         </div>
       </nav>
       {/* Sort Buttons */}
+      <div className="w-75">
+        <h2
+          style={{
+            color: "#43766C",
+            height: "50%",
+          }}
+        >
+          Elevate your screen with inspiring wallpapers
+        </h2>
+      </div>
 
-      {/* Search Input */}
-      <InputGroup className="mb-3">
-        <FormControl
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search wallpapers..."
-          aria-label="Search wallpapers"
-          aria-describedby="basic-addon2"
-        />
-      </InputGroup>
+      <div className="p-5">
+        {/* Search Input */}
+        <InputGroup className="mb-3">
+          <FormControl
+            style={{
+              borderRadius: "30px",
+            }}
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search wallpapers..."
+            aria-label="Search wallpapers"
+            aria-describedby="basic-addon2"
+          />
+        </InputGroup>
 
-      {/* Wallpapers Display */}
-      <Row xs={1} md={2} lg={3} xl={4}>
-        {currentWallpapers.length > 0 ? (
-          currentWallpapers.map((wallpaper) => (
-            <Col
-              key={wallpaper.id}
-              className="mb-4"
-              onClick={() => handleImageClick(wallpaper)}
-            >
-              <img
-                src={wallpaper.thumbs.large}
-                alt={wallpaper.id}
-                className="img-fluid rounded"
-              />
-              <p className="mt-2">Views: {wallpaper.views}</p>
-              <p>Favorites: {wallpaper.favorites}</p>
-            </Col>
-          ))
-        ) : (
-          <p>No results for this search.</p>
-        )}
-      </Row>
+        {/* Wallpapers Display */}
+        <Row xs={1} md={2} lg={3} xl={4}>
+          {currentWallpapers.length > 0 ? (
+            currentWallpapers.map((wallpaper) => (
+              <Col
+                key={wallpaper.id}
+                className="mb-4"
+                onClick={() => handleImageClick(wallpaper)}
+              >
+                <img
+                  src={wallpaper.thumbs.large}
+                  alt={wallpaper.id}
+                  className="img-fluid rounded"
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div className="d-flex direction-row align-items-center gap-2">
+                    <div className="d-flex direction-row align-items-center gap-2">
+                      <img
+                        width={25}
+                        height={25}
+                        style={{ borderRadius: "50%" }}
+                        src={User}
+                        alt={"John"}
+                      />
+                      <p className="mt-3">John Doe</p>
+                    </div>
+                  </div>
+                  <div className="d-flex direction-row gap-2">
+                    <p className="mt-3">
+                      <i class="fa fa-eye" /> {wallpaper.views}
+                    </p>
+                    <p className="mt-3">
+                      <i class="fa fa-heart" /> {wallpaper.favorites}
+                    </p>
+                  </div>
+                </div>
+              </Col>
+            ))
+          ) : (
+            <p>No results for this search.</p>
+          )}
+        </Row>
 
-      {/* Pagination */}
-      <Pagination className="mt-3">
-        {Array.from(
-          { length: Math.ceil(wallpapers.length / wallpapersPerPage) },
-          (_, index) => (
-            <Pagination.Item
-              key={index + 1}
-              active={index + 1 === currentPage}
-              onClick={() => paginate(index + 1)}
-            >
-              {index + 1}
-            </Pagination.Item>
-          )
-        )}
-      </Pagination>
+        {/* Pagination */}
+        <Pagination className="mt-3">
+          {Array.from(
+            { length: Math.ceil(wallpapers.length / wallpapersPerPage) },
+            (_, index) => (
+              <Pagination.Item
+                key={index + 1}
+                active={index + 1 === currentPage}
+                onClick={() => paginate(index + 1)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            )
+          )}
+        </Pagination>
+      </div>
 
       {/* Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
@@ -182,7 +249,7 @@ const SearchWallpaper = () => {
           {selectedImage && <ImageModal selectedImage={selectedImage} />}
         </Modal.Body>
       </Modal>
-    </Container>
+    </div>
   );
 };
 
