@@ -7,7 +7,6 @@ import {
   Pagination,
   InputGroup,
   FormControl,
-  Modal,
   Button,
 } from "react-bootstrap";
 import ImageModal from "./components/ImageModal";
@@ -36,7 +35,7 @@ const SearchWallpaper = () => {
             },
           }
         );
-        console.log(response);
+
         const sortedWallpapers = response.data.data.sort((a, b) => {
           if (sortBy === "latest") {
             return new Date(b.created_at) - new Date(a.created_at);
@@ -74,7 +73,8 @@ const SearchWallpaper = () => {
 
   const handleImageClick = (wallpaper) => {
     setSelectedImage(wallpaper);
-    setShowModal(true);
+    setShowModal(!showModal);
+    console.log("in");
   };
 
   const handleSortBy = (sortType) => {
@@ -144,7 +144,6 @@ const SearchWallpaper = () => {
           </Button>
         </div>
       </nav>
-      {/* Sort Buttons */}
       <div className="w-75">
         <h2
           style={{
@@ -157,7 +156,6 @@ const SearchWallpaper = () => {
       </div>
 
       <div className="p-5">
-        {/* Search Input */}
         <InputGroup className="mb-3">
           <FormControl
             style={{
@@ -172,19 +170,15 @@ const SearchWallpaper = () => {
           />
         </InputGroup>
 
-        {/* Wallpapers Display */}
         <Row xs={1} md={2} lg={3} xl={4}>
           {currentWallpapers.length > 0 ? (
             currentWallpapers.map((wallpaper) => (
-              <Col
-                key={wallpaper.id}
-                className="mb-4"
-                onClick={() => handleImageClick(wallpaper)}
-              >
+              <Col key={wallpaper.id} className="mb-4">
                 <img
                   src={wallpaper.thumbs.large}
                   alt={wallpaper.id}
                   className="img-fluid rounded"
+                  onClick={() => handleImageClick(wallpaper)}
                 />
                 <div
                   style={{
@@ -222,7 +216,6 @@ const SearchWallpaper = () => {
           )}
         </Row>
 
-        {/* Pagination */}
         <Pagination className="mt-3">
           {Array.from(
             { length: Math.ceil(wallpapers.length / wallpapersPerPage) },
@@ -239,15 +232,12 @@ const SearchWallpaper = () => {
         </Pagination>
       </div>
 
-      {/* Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Original Image</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {selectedImage && <ImageModal selectedImage={selectedImage} />}
-        </Modal.Body>
-      </Modal>
+      {showModal && (
+        <ImageModal
+          selectedImage={selectedImage}
+          onClose={() => setShowModal(!showModal)}
+        />
+      )}
     </div>
   );
 };
