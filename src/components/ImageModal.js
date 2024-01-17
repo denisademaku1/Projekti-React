@@ -2,13 +2,12 @@ import React from "react";
 
 const ImageModal = ({ selectedImage }) => {
   return (
-    <div>
+    <div className="w-100">
       <img
-        src={selectedImage.path}
-        alt={selectedImage.id}
-        className="img-fluid"
+        width={"100%"}
+        src={selectedImage.thumbs.original}
+        alt={`Thumbnail for ${selectedImage.id}`}
       />
-      <p>Uploader: {selectedImage.uploader}</p>
       <p>Date: {selectedImage.created_at}</p>
       <p>Category: {selectedImage.category}</p>
       <p>Purity: {selectedImage.purity}</p>
@@ -20,13 +19,6 @@ const ImageModal = ({ selectedImage }) => {
         <a href={selectedImage.url} target="_blank" rel="noopener noreferrer">
           {selectedImage.url}
         </a>
-      </p>
-      <p>
-        Thumbnail:{" "}
-        <img
-          src={selectedImage.thumbs.original}
-          alt={`Thumbnail for ${selectedImage.id}`}
-        />
       </p>
     </div>
   );
