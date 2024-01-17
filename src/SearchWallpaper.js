@@ -35,7 +35,7 @@ const SearchWallpaper = () => {
             },
           }
         );
-        console.log(response);
+
         const sortedWallpapers = response.data.data.sort((a, b) => {
           if (sortBy === "latest") {
             return new Date(b.created_at) - new Date(a.created_at);

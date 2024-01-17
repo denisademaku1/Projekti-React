@@ -1,5 +1,6 @@
 import React from "react";
 import User from "../img/user.jpeg";
+import "../style.css";
 
 const ImageModal = ({ selectedImage, onClose }) => {
   return (
@@ -46,14 +47,25 @@ const ImageModal = ({ selectedImage, onClose }) => {
                   src={User}
                   alt={"John"}
                 />
-                <p className="mt-3">John Doe</p>
+                <p
+                  style={{ color: "#43766c", fontWeight: "bold" }}
+                  className="mt-3"
+                >
+                  John Doe
+                </p>
               </div>
             </div>
             <div className="d-flex direction-row gap-2">
-              <p className="mt-3">
+              <p
+                style={{ color: "#43766c", fontWeight: "bold" }}
+                className="mt-3"
+              >
                 <i class="fa fa-eye" /> {selectedImage.views}
               </p>
-              <p className="mt-3">
+              <p
+                style={{ color: "#43766c", fontWeight: "bold" }}
+                className="mt-3"
+              >
                 <i class="fa fa-heart" /> {selectedImage.favorites}
               </p>
             </div>
@@ -63,35 +75,57 @@ const ImageModal = ({ selectedImage, onClose }) => {
             src={selectedImage.thumbs.original}
             alt={`Thumbnail for ${selectedImage.id}`}
           />
-          <div
-            style={{ padding: "0 10%" }}
-            className="w-100 d-flex mt-3 align-items-center justify-content-start"
-          >
-            {selectedImage.colors.map((item) => (
-              <p
-                style={{
-                  backgroundColor: item,
-                  height: "30px",
-                  width: "10%",
-                  border: ".5px solid black",
-                }}
-              ></p>
-            ))}
-          </div>
-          <p>Date: {selectedImage.created_at}</p>
-          <p>Category: {selectedImage.category}</p>
-          <p>Purity: {selectedImage.purity}</p>
-          <p>Size: {selectedImage.file_size} bytes</p>
-          <p>
-            Link:{" "}
-            <a
-              href={selectedImage.url}
-              target="_blank"
-              rel="noopener noreferrer"
+          <div className="color w-100 d-flex mt-3 justify-content-between">
+            <div style={{ padding: "0 10%" }} className="colors">
+              {selectedImage.colors.map((item) => (
+                <p
+                  className="color_2"
+                  style={{
+                    backgroundColor: item,
+                  }}
+                />
+              ))}
+            </div>
+            <p
+              style={{
+                padding: "0 10%",
+              }}
+              className="paragraph_modal"
             >
-              {selectedImage.url}
-            </a>
-          </p>
+              <a
+                href={selectedImage.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 5,
+                  textDecoration: "none",
+                  color: "#43766c",
+                }}
+              >
+                Fullscreen
+                <i class="fa fa-expand" />
+              </a>
+            </p>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              padding: "0 10%",
+            }}
+          >
+            <p className="paragraph_modal">
+              Category: {selectedImage.category}
+            </p>
+            <p className="paragraph_modal">Purity: {selectedImage.purity}</p>
+            <p className="paragraph_modal">
+              Type: {selectedImage.file_type.replace("/", ".")}
+            </p>
+          </div>
         </div>
       )}
     </div>
