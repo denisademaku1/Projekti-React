@@ -35,7 +35,7 @@ const SearchWallpaper = () => {
             },
           }
         );
-
+        console.log(response);
         const sortedWallpapers = response.data.data.sort((a, b) => {
           if (sortBy === "latest") {
             return new Date(b.created_at) - new Date(a.created_at);
@@ -60,6 +60,12 @@ const SearchWallpaper = () => {
       const scrollPosition = window.scrollY;
       const newColor = scrollPosition > 100 ? "#F8F4EC" : "white";
       setNavbarColor(newColor);
+
+      if (showModal === true) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "visible";
+      }
     };
 
     window.onscroll = handleScroll;
@@ -67,7 +73,7 @@ const SearchWallpaper = () => {
     return () => {
       window.onscroll = null;
     };
-  }, []);
+  }, [showModal]);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
