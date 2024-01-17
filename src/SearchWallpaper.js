@@ -58,7 +58,7 @@ const SearchWallpaper = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      const newColor = scrollPosition > 100 ? "#F8F4EC" : "white";
+      const newColor = scrollPosition > 100 ? "#43766c" : "white";
       setNavbarColor(newColor);
 
       if (showModal === true) {
@@ -110,7 +110,7 @@ const SearchWallpaper = () => {
         <a className="navbar-brand d-flex align-items-start" href="#">
           <h1
             className="mb-2"
-            style={{ fontFamily: "Rubik Burned", color: "#43766C" }}
+            style={{ fontFamily: "Rubik Burned", color: "#263A29" }}
           >
             WallHaven
           </h1>
@@ -118,9 +118,9 @@ const SearchWallpaper = () => {
         <div className="w-70 d-flex justify-content-end gap-2">
           <Button
             style={{
-              border: "1px solid #43766C",
-              backgroundColor: sortBy === "latest" ? "#43766C" : "white",
-              color: sortBy === "latest" ? "white" : "#43766C",
+              border: "1px solid #263A29",
+              backgroundColor: sortBy === "latest" ? "#263A29" : "white",
+              color: sortBy === "latest" ? "white" : "#263A29",
             }}
             onClick={() => handleSortBy("latest")}
           >
@@ -128,10 +128,9 @@ const SearchWallpaper = () => {
           </Button>
           <Button
             style={{
-              border: "1px solid #43766C",
-              backgroundColor: "#43766C",
-              backgroundColor: sortBy === "most-viewed" ? "#43766C" : "white",
-              color: sortBy === "most-viewed" ? "white" : "#43766C",
+              border: "1px solid #263A29",
+              backgroundColor: sortBy === "most-viewed" ? "#263A29" : "white",
+              color: sortBy === "most-viewed" ? "white" : "#263A29",
             }}
             onClick={() => handleSortBy("most-viewed")}
           >
@@ -139,10 +138,9 @@ const SearchWallpaper = () => {
           </Button>
           <Button
             style={{
-              border: "1px solid #43766C",
-              backgroundColor: "#43766C",
-              backgroundColor: sortBy === "toplist" ? "#43766C" : "white",
-              color: sortBy === "toplist" ? "white" : "#43766C",
+              border: "1px solid #263A29",
+              backgroundColor: sortBy === "toplist" ? "#263A29" : "white",
+              color: sortBy === "toplist" ? "white" : "#263A29",
             }}
             onClick={() => handleSortBy("toplist")}
           >
@@ -153,7 +151,7 @@ const SearchWallpaper = () => {
       <div className="w-75">
         <h2
           style={{
-            color: "#43766C",
+            color: "#263A29",
             height: "50%",
           }}
         >
@@ -180,39 +178,47 @@ const SearchWallpaper = () => {
           {currentWallpapers.length > 0 ? (
             currentWallpapers.map((wallpaper) => (
               <Col key={wallpaper.id} className="mb-4">
-                <img
-                  src={wallpaper.thumbs.large}
-                  alt={wallpaper.id}
-                  className="img-fluid rounded"
-                  onClick={() => handleImageClick(wallpaper)}
-                />
                 <div
                   style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
+                    boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)",
+                    borderRadius: "10px",
+                    padding: "1% 2%",
                   }}
                 >
-                  <div className="d-flex direction-row align-items-center gap-2">
+                  <img
+                    src={wallpaper.thumbs.large}
+                    alt={wallpaper.id}
+                    className="img-fluid rounded"
+                    onClick={() => handleImageClick(wallpaper)}
+                  />
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
                     <div className="d-flex direction-row align-items-center gap-2">
-                      <img
-                        width={25}
-                        height={25}
-                        style={{ borderRadius: "50%" }}
-                        src={User}
-                        alt={"John"}
-                      />
-                      <p className="mt-3">John Doe</p>
+                      <div className="d-flex direction-row align-items-center gap-2">
+                        <img
+                          width={25}
+                          height={25}
+                          style={{ borderRadius: "50%" }}
+                          src={User}
+                          alt={"John"}
+                        />
+                        <p className="mt-3">John Doe</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="d-flex direction-row gap-2">
-                    <p className="mt-3">
-                      <i class="fa fa-eye" /> {wallpaper.views}
-                    </p>
-                    <p className="mt-3">
-                      <i class="fa fa-heart" /> {wallpaper.favorites}
-                    </p>
+                    <div className="d-flex direction-row gap-2">
+                      <p className="mt-3">
+                        <i class="fa fa-eye" /> {wallpaper.views}
+                      </p>
+                      <p className="mt-3">
+                        <i class="fa fa-heart" /> {wallpaper.favorites}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </Col>
@@ -222,7 +228,7 @@ const SearchWallpaper = () => {
           )}
         </Row>
 
-        <Pagination className="mt-3">
+        <Pagination className="mt-3 d-flex align-items-center justify-content-center">
           {Array.from(
             { length: Math.ceil(wallpapers.length / wallpapersPerPage) },
             (_, index) => (
@@ -230,6 +236,9 @@ const SearchWallpaper = () => {
                 key={index + 1}
                 active={index + 1 === currentPage}
                 onClick={() => paginate(index + 1)}
+                style={{
+                  color: "#263A29",
+                }}
               >
                 {index + 1}
               </Pagination.Item>
