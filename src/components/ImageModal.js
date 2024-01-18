@@ -60,13 +60,13 @@ const ImageModal = ({ selectedImage, onClose }) => {
                 style={{ color: "#43766c", fontWeight: "bold" }}
                 className="mt-3"
               >
-                <i class="fa fa-eye" /> {selectedImage.views}
+                <i className="fa fa-eye" /> {selectedImage.views}
               </p>
               <p
                 style={{ color: "#43766c", fontWeight: "bold" }}
                 className="mt-3"
               >
-                <i class="fa fa-heart" /> {selectedImage.favorites}
+                <i className="fa fa-heart" /> {selectedImage.favorites}
               </p>
             </div>
           </div>
@@ -106,7 +106,7 @@ const ImageModal = ({ selectedImage, onClose }) => {
                 }}
               >
                 Fullscreen
-                <i class="fa fa-expand" />
+                <i className="fa fa-expand" />
               </a>
             </p>
           </div>

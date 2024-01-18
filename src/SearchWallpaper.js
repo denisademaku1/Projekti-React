@@ -44,6 +44,9 @@ const SearchWallpaper = () => {
           } else if (sortBy === "toplist") {
             return b.favorites - a.favorites;
           }
+
+          // Default case: if sortBy is none of the specified values, maintain the order
+          return 0;
         });
 
         setWallpapers(sortedWallpapers);
@@ -106,14 +109,18 @@ const SearchWallpaper = () => {
         }}
         className="w-100 navbar navbar-expand-lg flex-row align-items-center justify-content-between"
       >
-        <a className="navbar-brand d-flex align-items-start" href="#">
+        <button
+          className="navbar-brand d-flex align-items-start"
+          style={{ border: "none", background: "none", cursor: "pointer" }}
+        >
           <h1
             className="mb-2"
             style={{ fontFamily: "Rubik Burned", color: "#263A29" }}
           >
             WallHaven
           </h1>
-        </a>
+        </button>
+
         <div className="w-70 d-flex justify-content-end gap-2">
           <Button
             style={{
@@ -164,6 +171,7 @@ const SearchWallpaper = () => {
             style={{
               borderRadius: "30px",
             }}
+            id="form"
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -212,10 +220,10 @@ const SearchWallpaper = () => {
                     </div>
                     <div className="d-flex direction-row gap-2">
                       <p className="mt-3">
-                        <i class="fa fa-eye" /> {wallpaper.views}
+                        <i className="fa fa-eye" /> {wallpaper.views}
                       </p>
                       <p className="mt-3">
-                        <i class="fa fa-heart" /> {wallpaper.favorites}
+                        <i className="fa fa-heart" /> {wallpaper.favorites}
                       </p>
                     </div>
                   </div>
