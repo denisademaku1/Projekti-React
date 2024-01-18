@@ -19,8 +19,9 @@ const SearchWallpaper = () => {
   const [wallpapersPerPage] = useState(12);
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [sortBy, setSortBy] = useState("latest");
+  const [sortBy, setSortBy] = useState("");
   const [navbarColor, setNavbarColor] = useState("");
+  const [selectedResolution, setSelectedResolution] = useState("All");
 
   const apiKey = "nS3UpX7vONFrH1yFbdg71bxEmiucd3dI";
 
@@ -45,7 +46,6 @@ const SearchWallpaper = () => {
             return b.favorites - a.favorites;
           }
 
-          // Default case: if sortBy is none of the specified values, maintain the order
           return 0;
         });
 
@@ -90,9 +90,33 @@ const SearchWallpaper = () => {
     setCurrentPage(1);
   };
 
+  const handleResolutionChange = (event) => {
+    setSelectedResolution(event.target.value);
+  };
+  const filterWallpapers = () => {
+    if (selectedResolution === "All") {
+      return wallpapers;
+    }
+
+    const [width, height] = selectedResolution.split("x");
+    const selectedWidth = parseInt(width, 10);
+    const selectedHeight = parseInt(height, 10);
+
+    return wallpapers.filter((wallpaper) => {
+      const [wallpaperWidth, wallpaperHeight] = wallpaper.resolution.split("x");
+      const parsedWallpaperWidth = parseInt(wallpaperWidth, 10);
+      const parsedWallpaperHeight = parseInt(wallpaperHeight, 10);
+
+      return (
+        parsedWallpaperWidth >= selectedWidth &&
+        parsedWallpaperHeight >= selectedHeight
+      );
+    });
+  };
+
   const indexOfLastWallpaper = currentPage * wallpapersPerPage;
   const indexOfFirstWallpaper = indexOfLastWallpaper - wallpapersPerPage;
-  const currentWallpapers = wallpapers.slice(
+  const currentWallpapers = filterWallpapers().slice(
     indexOfFirstWallpaper,
     indexOfLastWallpaper
   );
@@ -120,8 +144,28 @@ const SearchWallpaper = () => {
             WallHaven
           </h1>
         </button>
+        <div className="w-100 d-flex justify-content-end gap-2">
+          <select
+            id="resolution"
+            value={selectedResolution}
+            onChange={handleResolutionChange}
+            style={{
+              marginLeft: "1rem",
+              backgroundColor:
+                selectedResolution === "All" ? "#fff" : "#263A29",
+              color: selectedResolution === "All" ? "#263A29" : "#fff",
+              border: "1px solid #263A29",
+              borderRadius: "10px",
+              padding: "0 1%",
+            }}
+          >
+            <option value="All">All Resolutions</option>
+            <option value="1024x768">1024x768 </option>
+            <option value="1280x720">1280x720</option>
+            <option value="1366x768">1366x768</option>
+            <option value="1600x900">1600x900 </option>
+          </select>
 
-        <div className="w-70 d-flex justify-content-end gap-2">
           <Button
             style={{
               border: "1px solid #263A29",
@@ -235,20 +279,19 @@ const SearchWallpaper = () => {
           )}
         </Row>
         <Pagination className="custom-pagination mt-3 d-flex align-items-center justify-content-center">
-  {Array.from(
-    { length: Math.ceil(wallpapers.length / wallpapersPerPage) },
-    (_, index) => (
-      <Pagination.Item
-        key={index + 1}
-        active={index + 1 === currentPage}
-        onClick={() => paginate(index + 1)}
-      >
-        {index + 1}
-      </Pagination.Item>
-    )
-  )}
-</Pagination>
-
+          {Array.from(
+            { length: Math.ceil(wallpapers.length / wallpapersPerPage) },
+            (_, index) => (
+              <Pagination.Item
+                key={index + 1}
+                active={index + 1 === currentPage}
+                onClick={() => paginate(index + 1)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            )
+          )}
+        </Pagination>
       </div>
 
       {showModal && (
