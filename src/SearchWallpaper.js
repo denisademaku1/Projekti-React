@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 import ImageModal from "./components/ImageModal";
 import User from "./img/user.jpeg";
+import ResolutionFilter from "./components/ResolutionFilter";
 
 const SearchWallpaper = () => {
   const [query, setQuery] = useState("");
@@ -145,27 +146,10 @@ const SearchWallpaper = () => {
           </h1>
         </button>
         <div className="w-100 d-flex justify-content-end gap-2">
-          <select
-            id="resolution"
-            value={selectedResolution}
-            onChange={handleResolutionChange}
-            style={{
-              marginLeft: "1rem",
-              backgroundColor:
-                selectedResolution === "All" ? "#fff" : "#263A29",
-              color: selectedResolution === "All" ? "#263A29" : "#fff",
-              border: "1px solid #263A29",
-              borderRadius: "10px",
-              padding: "0 1%",
-            }}
-          >
-            <option value="All">All Resolutions</option>
-            <option value="1024x768">1024x768 </option>
-            <option value="1280x720">1280x720</option>
-            <option value="1366x768">1366x768</option>
-            <option value="1600x900">1600x900 </option>
-          </select>
-
+          <ResolutionFilter
+            handleResolutionChange={handleResolutionChange}
+            selectedResolution={selectedResolution}
+          />
           <Button
             style={{
               border: "1px solid #263A29",
