@@ -12,6 +12,7 @@ import {
 import ImageModal from "./components/ImageModal";
 import User from "./img/user.jpeg";
 import ResolutionFilter from "./components/ResolutionFilter";
+import Filters from "./components/Filters";
 
 const SearchWallpaper = () => {
   const [query, setQuery] = useState("");
@@ -150,36 +151,7 @@ const SearchWallpaper = () => {
             handleResolutionChange={handleResolutionChange}
             selectedResolution={selectedResolution}
           />
-          <Button
-            style={{
-              border: "1px solid #263A29",
-              backgroundColor: sortBy === "latest" ? "#263A29" : "white",
-              color: sortBy === "latest" ? "white" : "#263A29",
-            }}
-            onClick={() => handleSortBy("latest")}
-          >
-            Latest
-          </Button>
-          <Button
-            style={{
-              border: "1px solid #263A29",
-              backgroundColor: sortBy === "most-viewed" ? "#263A29" : "white",
-              color: sortBy === "most-viewed" ? "white" : "#263A29",
-            }}
-            onClick={() => handleSortBy("most-viewed")}
-          >
-            Most Viewed
-          </Button>
-          <Button
-            style={{
-              border: "1px solid #263A29",
-              backgroundColor: sortBy === "toplist" ? "#263A29" : "white",
-              color: sortBy === "toplist" ? "white" : "#263A29",
-            }}
-            onClick={() => handleSortBy("toplist")}
-          >
-            Toplist
-          </Button>
+          <Filters sortBy={sortBy} handleSortBy={handleSortBy} />
         </div>
       </nav>
       <div className="w-75">
