@@ -21,7 +21,7 @@ const ImageModal = ({ selectedImage, onClose }) => {
         <div
           style={{
             backgroundColor: "white",
-            width: "70%",
+            width: "60%",
             padding: "1%",
             height: "80%",
             overflow: "auto",
