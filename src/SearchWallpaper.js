@@ -234,24 +234,21 @@ const SearchWallpaper = () => {
             <p className="w-100">No results for this search.</p>
           )}
         </Row>
+        <Pagination className="custom-pagination mt-3 d-flex align-items-center justify-content-center">
+  {Array.from(
+    { length: Math.ceil(wallpapers.length / wallpapersPerPage) },
+    (_, index) => (
+      <Pagination.Item
+        key={index + 1}
+        active={index + 1 === currentPage}
+        onClick={() => paginate(index + 1)}
+      >
+        {index + 1}
+      </Pagination.Item>
+    )
+  )}
+</Pagination>
 
-        <Pagination className="mt-3 d-flex align-items-center justify-content-center">
-          {Array.from(
-            { length: Math.ceil(wallpapers.length / wallpapersPerPage) },
-            (_, index) => (
-              <Pagination.Item
-                key={index + 1}
-                active={index + 1 === currentPage}
-                onClick={() => paginate(index + 1)}
-                style={{
-                  color: "#263A29",
-                }}
-              >
-                {index + 1}
-              </Pagination.Item>
-            )
-          )}
-        </Pagination>
       </div>
 
       {showModal && (

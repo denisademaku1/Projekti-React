@@ -1,6 +1,6 @@
 .title {
   font-size: 50px;
-  color: #61dafb;
+  color: rgb(67, 118, 108);
   display: flex;
   justify-content: center;
   margin-top: 30px;
@@ -66,4 +66,26 @@
   .paragraph_modal {
     margin-top: 15px;
   }
+}
+/* Add these styles to your CSS file or create a new one */
+
+/* Style for active pagination item */
+.pagination .page-item.active .page-link {
+  background-color: rgb(67, 118, 108); 
+  border-color: rgb(67, 118, 108);
+  color: white;
+}
+
+/* Style for non-active pagination items */
+.pagination .page-item .page-link {
+  background-color: white;
+  border-color: rgb(67, 118, 108);
+  color: rgb(67, 118, 108); 
+}
+
+/* Hover effect for pagination items */
+.pagination .page-item .page-link:hover {
+  background-color: #e1f5fe; 
+  border-color: rgb(67, 118, 108);
+  color: rgb(67, 118, 108);
 }
