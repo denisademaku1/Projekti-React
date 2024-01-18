@@ -53,20 +53,20 @@ const SearchWallpaper = () => {
     };
 
     searchWallpapers();
-  }, [query, sortBy, apiKey]);
+  }, [query, sortBy]);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       const newColor = scrollPosition > 100 ? "#43766c" : "white";
       setNavbarColor(newColor);
-
-      if (showModal === true) {
-        document.body.style.overflow = "hidden";
-      } else {
-        document.body.style.overflow = "visible";
-      }
     };
+
+    if (showModal === true) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "visible";
+    }
 
     window.onscroll = handleScroll;
 
@@ -80,7 +80,6 @@ const SearchWallpaper = () => {
   const handleImageClick = (wallpaper) => {
     setSelectedImage(wallpaper);
     setShowModal(!showModal);
-    console.log("in");
   };
 
   const handleSortBy = (sortType) => {
@@ -224,7 +223,7 @@ const SearchWallpaper = () => {
               </Col>
             ))
           ) : (
-            <p>No results for this search.</p>
+            <p className="w-100">No results for this search.</p>
           )}
         </Row>
 
