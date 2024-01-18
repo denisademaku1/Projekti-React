@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./style.css";
-import {
-  Row,
-  Col,
-  Pagination,
-  InputGroup,
-  FormControl,
-  Button,
-} from "react-bootstrap";
+import { Row, Col, Pagination, InputGroup, FormControl } from "react-bootstrap";
 import ImageModal from "./components/ImageModal";
 import User from "./img/user.jpeg";
 import ResolutionFilter from "./components/ResolutionFilter";
